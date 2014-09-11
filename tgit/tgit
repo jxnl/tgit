@@ -13,17 +13,18 @@ csk = "API-secret"
 t = "Access Token"
 ts = "Access Token secret"
 
+
 class Twit(object):
 
     def __init__(self):
-        self.twitter = Twitter(auth=OAuth(t, ts, cs,csk))
+        self.twitter = Twitter(auth=OAuth(t, ts, cs, csk))
 
     def post(self, msg):
         self.twitter.statuses.update(status=msg)
         pass
 
     def commit(self, msg):
-        c = envoy.run("git commit -m {msg}".format(msg=msg))
+        c = envoy.run("git commit -m \"{msg}\"".format(msg=msg))
         print(c.std_out)
         self.post(msg)
         print("Updated Twitter : {msg}".format(msg=msg))
