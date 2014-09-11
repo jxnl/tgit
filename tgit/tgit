@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+from twitter import Twitter, OAuth
+from argparse import ArgumentParser
+from sys import exit
+import envoy
+
+#twitter-api-key
+cs = "API-key"
+csk = "API-secret"
+#twitter-tokens
+t = "Access Token"
+ts = "Access Token secret"
+
+class Twit(object):
+
+    def __init__(self):
+        self.twitter = Twitter(auth=OAuth(t, ts, cs,csk))
+
+    def post(self, msg):
+        self.twitter.statuses.update(status=msg)
+        pass
+
+    def commit(self, msg):
+        c = envoy.run("git commit -m {msg}".format(msg=msg))
+        print(c.std_out)
+        self.post(msg)
+        print("Updated Twitter : {msg}".format(msg=msg))
+
+
+def gen_parser():
+
+    desc = """Wanna tweet out some of your sick ass mother fucking bugfixes?\
+              Now you can!"""
+
+    parser = ArgumentParser(description=desc)
+    subparser = parser.add_subparsers(help="sub-commands")
+
+    # add a commit subparser
+    commiting = subparser.add_parser('commit', help="commit and tweet")
+    commiting.add_argument('-m', type=str, help="commit message",
+                           dest="commit_msg")
+    return parser
+
+
+def main():
+    parser = gen_parser()
+    args = parser.parse_args()
+    twit = Twit()
+
+    if args.commit_msg:
+        twit.commit(args.commit_msg)
+
+if __name__ == "__main__":
+    exit(main())
