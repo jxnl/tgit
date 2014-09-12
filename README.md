@@ -2,6 +2,8 @@ Make a tweet when you commit. Honestly could have been way shorter.
 Like without a class, or so many dependencies. But.. If you want to add something.
 I'm sure that you'll figure it out.
 
+Setup
+-----
 Just clone the repository, add your keys in the `tgit/tgit` and run `python setup.py install`. 
  
 Usage
