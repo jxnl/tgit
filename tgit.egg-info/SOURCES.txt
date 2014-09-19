@@ -1,0 +1,10 @@
+MANIFEST.in
+README
+setup.py
+tgit/__init__.py
+tgit/tgit
+tgit.egg-info/PKG-INFO
+tgit.egg-info/SOURCES.txt
+tgit.egg-info/dependency_links.txt
+tgit.egg-info/requires.txt
+tgit.egg-info/top_level.txt

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="tgit",
-    version='0.1.0',
+    version='0.1.1',
     author='Jason Liu',
     author_email='jx5liu@uwaterloo.ca',
     url="http://jxnl.co",
