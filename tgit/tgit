@@ -19,37 +19,22 @@ class Tgit(object):
     def __init__(self):
         self.twitter = Twitter(auth=OAuth(t, ts, cs, csk))
 
-    def post(self, msg):
-        """Accept a message to  tweet
-
-        Arguments
-        ---------
-            msg (str) - twitter message
-        """
+    def _post(self, msg):
+        """update status on twitter"""
         self.twitter.statuses.update(status=msg)
 
     def commit(self, msg):
-        """Accept a message to commit and tweet
+        """commit and tweet message"""
 
-        Arguments
-        ---------
-            msg (str) - commit and twitter message
-        """
-
-        msg = msg
-        c = envoy.run("git commit -m \"{msg}\"".format(msg=msg))
+        c = envoy.run('git commit -m "{msg}"'.format(msg=msg))
         print(c.std_out)
 
-        self.post(msg)
+        self._post(msg)
         print("Updated Twitter : {msg}".format(msg=msg))
 
     def search(self, search_terms=None):
-        """Accept a message to search
+        """search for a collection of terms on twitter"""
 
-        Arguments
-        ---------
-           search_terms (str) - search terms
-        """
         search = " ".join(search_terms)
         search_results = self.twitter.search.tweets(q=search)
         search_results = search_results['statuses']
@@ -66,11 +51,13 @@ def gen_parser():
     subparser = parser.add_subparsers(help="sub-commands")
 
     # add a commit subparser
+    # allows user to git commit and update twitter status
     c = subparser.add_parser('commit', help="commit and tweet")
     c.add_argument('-m', '--message', type=str,
                    help="commit message")
 
     # add a twitter subparser
+    # allows user to search twitter and show n number of lines
     t = subparser.add_parser('twitter', help="search for things!")
     t.add_argument('-s', '--search', nargs='+', type=str,
                    help="string search", dest="search")
